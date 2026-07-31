@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# CI trigger test: this comment intentionally leaves build behavior unchanged.
+
 require_arg() {
     local value="${1:-}"
     local name="${2:-argument}"
