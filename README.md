@@ -60,6 +60,8 @@ You can download the latest builds from [here](https://github.com/Vita3K/Vita3K/
 
 Please see [`building.md`](./building.md).
 
+Developers and coding agents should start with [`AGENTS.md`](./AGENTS.md) for the project map, local validation commands, and change boundaries. The read-only preflight is `./check.sh`.
+
 ## Running
 Check our [quickstart guide](https://vita3k.org/quickstart) to make sure your computer meets the minimum requirements to run Vita3K.  
 Don't forget to have your graphics driver up to date and to install the [Visual C++ 2015-2022 Redistributable](https://aka.ms/vs/17/release/VC_redist.x64.exe) if you are a Windows user.  

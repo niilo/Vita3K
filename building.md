@@ -1,6 +1,6 @@
 # Build Vita3K
 
-Vita3K uses CMake for its project configuration and generation. In theory, it should be compatible with any project generator supported by CMake, C++20 compatible compiler and an IDE with CMake support. 
+Vita3K uses CMake for its project configuration and generation. In theory, it should be compatible with any project generator supported by CMake, C++23 compatible compiler and an IDE with CMake support.
 
 The project provides [CMake presets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) to allow configuring and building Vita3K without having to deal with adding the needed arguments through a command-line interface or using the user interface of your IDE. As long as your IDE or code editor supports CMake, the software should immediately detect the presets and let you choose which configuration settings you want to use to generate the program. Reference on how to use CMake presets with various IDEs and code editors can be found here:
 
@@ -163,6 +163,22 @@ Note: The CMake preset `linux-ninja-clang` makes use of the LLD linker, which wi
   ```sh
   ./gradlew --stacktrace assembleReldebug
   ```
+
+## Fast validation for contributors
+
+Run the repository's read-only preflight before a build:
+
+```sh
+./check.sh
+```
+
+It checks whitespace errors, CMake preset parsing, and C/C++ formatting. Use `./check.sh --diff-only` when only Git whitespace validation is available, or `./format.sh --check` for a formatter-only check. The full desktop CI path also runs the registered tests after building:
+
+```sh
+bash ./.ci/build-desktop.sh --preset <preset> --config Release
+```
+
+For a focused local test run after configuring, use `ctest --test-dir build/<preset> --build-config Debug --output-on-failure`.
 
 ## Note
 
