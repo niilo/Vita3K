@@ -96,6 +96,9 @@ struct FrameObject {
     vk::CommandPool prerender_pool;
 
     std::vector<vk::Fence> rendered_fences;
+    // Monotonic completion values allow frame recycling to wait once for all
+    // submissions while fences remain available for reset/reuse.
+    std::vector<uint64_t> rendered_timeline_values;
     // equals to context.frame_timestamp when the frame object is used
     uint64_t frame_timestamp;
 
@@ -173,6 +176,7 @@ struct VisibilityBuffer {
 
 struct FenceWaitRequest {
     vk::Fence fence;
+    uint64_t timeline_value = 0;
 };
 
 // request to trigger a notification after the previous fences have been waited for
