@@ -127,13 +127,19 @@ using PhysicalKeyCode = input::PhysicalKeyCode;
     code(PhysicalKeyCode, "keyboard-alternate-pinch-in-alt", PhysicalKeyCode::Unbound, keyboard_alternate_pinch_in_alt)                \
     code(PhysicalKeyCode, "keyboard-alternate-pinch-out-alt", PhysicalKeyCode::Unbound, keyboard_alternate_pinch_out_alt)
 
+#ifdef __ANDROID__
+#define CONFIG_DEFAULT_VALIDATION_LAYER false
+#else
+#define CONFIG_DEFAULT_VALIDATION_LAYER true
+#endif
+
 #define CONFIG_INDIVIDUAL(code)                                                                         \
     code(bool, "initial-setup", false, initial_setup)                                                   \
     code(bool, "gdbstub", false, gdbstub)                                                               \
     code(bool, "log-active-shaders", false, log_active_shaders)                                         \
     code(bool, "log-uniforms", false, log_uniforms)                                                     \
     code(bool, "log-compat-warn", false, log_compat_warn)                                               \
-    code(bool, "validation-layer", true, validation_layer)                                              \
+    code(bool, "validation-layer", CONFIG_DEFAULT_VALIDATION_LAYER, validation_layer)                  \
     code(bool, "pstv-mode", false, pstv_mode)                                                           \
     code(bool, "show-mode", false, show_mode)                                                           \
     code(bool, "demo-mode", false, demo_mode)                                                           \
