@@ -4,12 +4,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-This checkout is `niilo/Vita3K` (`origin`). It is based on Vita3K-Plus
-(nckstwrt/Vita3K-Plus), a fork of upstream Vita3K with game compatibility and
-rendering fixes. `upstream` is `Vita3K/Vita3K`. `README.md` lists the per-game
-fixes and the Android notes (Turnip drivers on Adreno, Accurate Thread
-Scheduling, memory mapping defaults: External Host on Windows, Page Table on
-Android).
+This checkout is `niilo/Vita3K` (`origin`). The code is upstream Vita3K
+(`upstream` is `Vita3K/Vita3K`). `README.md` and the screenshots come from
+Vita3K-Plus (nckstwrt/Vita3K-Plus): the merge `1f75257f` took only those
+files, not the Plus code. So the README's per-game fixes, "Accurate Thread
+Scheduling" and the "Page Table on Android" default are not in this code.
+The Plus code is on `plus/all-enhancements` (read-only remote `plus`).
+
+Unmerged Adreno work exists on `feat/ayaneo-pocket-s-performance`,
+`feat/vulkan13-adreno` and `feat/vulkan-device-profiles`.
+
+The Vulkan validation layer is on by default (`config.h:136`), and every APK
+carries it (`android/prebuilt/`, packaged through `jniLibs`). Android loads
+a layer packaged in the app's own APK for release and debug builds alike.
+So Android builds probably run with validation on, which is much slower.
+Check for "Enabling vulkan validation layers" in `vita3k.log`. Measure
+speed with release APKs.
 
 The parent file `../CLAUDE.md` describes a different fork (Vita3K Thor). Its
 writing standard applies here. Its tools (`tools/mcp_server.py`,
