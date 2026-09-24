@@ -170,6 +170,35 @@ Note: The CMake preset `linux-ninja-clang` makes use of the LLD linker, which wi
   ./gradlew --stacktrace assembleReldebug
   ```
 
+## macOS with Apple container (Linux and Android builds)
+
+On a Mac with Apple silicon and macOS 26, you can build the Linux version and
+the Android APK in Linux containers with Apple's
+[`container`](https://github.com/apple/container) tool. You do not need to
+install Qt, the Android SDK, the NDK or vcpkg on the Mac.
+
+- Install the tool and download the submodules.
+  ```sh
+  brew install container
+  git submodule update --init --recursive
+  ```
+
+- Build, test and format with the helper script. The first run builds the
+  image. The build output is written to `build/` in the repository.
+  ```sh
+  container/vita3k.sh build          # Linux build in build/container-linux
+  container/vita3k.sh test           # run the unit tests
+  container/vita3k.sh format-check   # check formatting with clang-format 22
+  container/vita3k.sh android        # debug APK in build/android-apk/app-reldebug.apk
+  container/vita3k.sh android release  # small arm64 APK in build/android-apk/app-release.apk
+  ```
+
+- Run `container/vita3k.sh` with no arguments to see all commands.
+
+The Android image is x86_64 and runs through Rosetta, because the Android NDK
+has no Linux arm64 host tools. The emulator cannot use the GPU in a
+container, so use the native macOS build to play games.
+
 ## Note
 
 - After cloning or checking out a branch, you should always update submodules.
