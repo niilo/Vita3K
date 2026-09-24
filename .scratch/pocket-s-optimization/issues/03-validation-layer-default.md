@@ -1,6 +1,7 @@
 # 03: Turn the Vulkan validation layer off by default on Android
 
-Status: open
+Status: claimed
+Claimed: 2026-09-25 Claude Code session (Opus 5.5)
 Type: task
 Label: ready-for-agent
 Blocked by: none

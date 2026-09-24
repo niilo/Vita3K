@@ -1,6 +1,7 @@
 # 01: List the Android changes in Vita3K-Plus and in the local branches
 
-Status: open
+Status: claimed
+Claimed: 2026-09-25 Claude Code session (Opus 5.5)
 Type: research
 Label: ready-for-agent
 Blocked by: none
