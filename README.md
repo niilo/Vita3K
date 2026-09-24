@@ -1,3 +1,99 @@
+# Vita3K+
+
+A fork of Vita3K with additional game compatibility and rendering fixes. All credit for the emulator itself belongs to the Vita3K team.
+
+## Download
+
+https://github.com/nckstwrt/Vita3K-Plus/releases
+
+## Android notes
+
+> [!IMPORTANT]
+> **Snapdragon / Adreno:** Use Turnip drivers for the best compatibility.
+
+> [!IMPORTANT]
+> **Mali Users:** There are things that will definitely not work and most likely never work with Mali. Very little I can (or want) to do about that I'm afraid.
+
+> [!IMPORTANT]
+> **Freezing or hangs:** Enable **Accurate Thread Scheduling** in Graphics settings (which is the new default).  
+> This is needed for games such as *Dead or Alive 5 Plus*, *Sonic*, *Samurai Warriors 3*, etc.
+> Sonic can be temperamental but should start ok 80% of the time
+
+## Enhancements
+
+# v1.1 - Released 13th Sept 2026
+- **Dead Or Alive 5 Plus** - Working - On Android requires Adreno, Turnip and the new setting Thread Scheduling Accuracy On
+- **Metal Gear Solid 3** - Freezes fixed/worked around. Blending graphics fixed. On-Screen Touchpad fixes.
+- **Resistance** - Rendering issues fixed on Android (for Turnip devices - Mali can still have issues)
+- **Assassin's Creed III: Liberation**: Sound issues resolved
+- **Killzone** - Fix for the crash occurring at level 5
+- **Neptunia Re;Birth1** - Fix for crash after selecting New Game and background images not showing
+- **Little Big Planet** - "Vignette" shading and background images fixed
+- **Ys: Memories of Celcetta** - Graphics Fixed
+- **Ragnarok Odyssey ACE** - Graphics Fixed
+- **Ninja Gaiden Sigma 2 Plus** - Graphics Fixed
+- **ModNation: Racers Road Trip** - Regression Fixed
+- **RESOGUN** - Graphics issues now fixed
+- **Omega Labyrinth** - Loading fixed by nishinji
+- **Dynasty Warriors 8** - Fixed text/graphics clipping
+- **Samurai Warriors 3** - Use Accurate Thread Scheduling to workaround loading bugs
+- **Gundam Breaker 3** - Graphics Fixed
+- **SteamWorld Dig** - Loads and plays
+- **UPPERS** - Graphics Fixed
+- **Madden 13** - Face textures + Crowd fixed 
+- **Oddworld: New'n'Tasty** - Graphics Fixed
+- **God Eater 2 Rage Burst** - Graphics Fixed
+- **Sword Art Online** - Latest game patch now works
+- **Disgaea 3** - Saving & Loading now work. liblocation implemented to hopefully stop the 50 min crashes.
+- **Borderlands 2** - Shorten time it checks for PSN
+- **Evil Corps From Hell** - Loading and graphics fixed
+- **Tearaway** - Graphics Fixed
+- **Ultimate Marvel vs Capcom 3** - Graphics Fixed
+<!-- -->
+- Defaults now to External Host for Windows and Page Table on Android. **Use these Memory Mapping options for the best compatibility**
+- Lots of memory, timing, stability, IME and sound improvements
+- Thanks to Reyes for all his help testing!
+
+# v1.0
+- **Killzone** Plays well and looks amazing
+- **Resistance** Colours are now all good. Intermittent freezing has been fixed.
+- **Assassin's Creed III: Liberation**: Graphical issues fixed
+- **LittleBigPlanet**: Missing backgrounds, starting sounds and other graphics fixed
+- **Need for Speed: Most Wanted**: floating badges fixed, headlights through the road fixed, sound fixed (mostly).
+- **Call of Duty: Declassified** Boots and plays well now
+- **Uncharted** Now plays at any resolution plus minor fixes
+- **Devious Dungeon** Now launches fine
+- **Sonic Transformed** Plays well and looks amazing (new per game thread accuracy setting to ensure a good startup)
+- **Spider-Man** No longer sometimes hangs on load.
+- **Helldivers** No longer sometimes crashes at startup
+- **Soul Sacrifice Delta**: Graphical issues fixed
+- **Minecraft** was a white screen in Vulkan, now fixed
+- **Kancolle Kai** Now plays without getting stuck at the difficulty selection screen
+  
+Hopefully a lot of crash bugs and freezing have been fixed by these changes. Other games may now be a lot better or possibly worse with this version.
+
+## Notes
+
+- The settings now default to High Quality
+- These updates were designed with higher-end devices in mind. Although I have attempted to make them work and tested on Mali based devices (i.e. Killzone works fine on a Mali-G78 MP14 device I have) that is not the goal of this fork.
+- For better character shadows in Killzone use a memory mapping of External Host on Windows or Native Buffer on Android. Double Buffer works well but makes the shadows flicker annonyingly.
+
+## New Screenshots
+
+See the **[Screenshots page](./Screenshots.md)** for the games above running in Vita3K+.
+
+[![Vita3K+ screenshots](./screenshots/KZ.jpg)](./Screenshots.md)
+
+## Report Issues and Problems
+
+https://github.com/nckstwrt/Vita3K-Plus/issues
+
+## Code Changes
+Check the all-enhancements branch for the all code changes
+
+Below is the original Vita3k's README:
+---
+
 # Vita3K
 
 [![C/C++ CI](https://github.com/Vita3K/Vita3K/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/Vita3K/Vita3K/actions/workflows/c-cpp.yml)
