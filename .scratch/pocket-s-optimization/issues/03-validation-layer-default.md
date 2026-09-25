@@ -36,3 +36,10 @@ much slower.
   `## Answer`.
 
 ## Answer
+
+Code done on branch `pocket-s/03-validation-layer-default`, commit
+9f359dfa. Linux and Android release builds pass. Besides `config.h` and
+`EmulatorConfig.kt`, the commit also changes the default in
+`config/state.h` (`CurrentConfig`) and in `config/src/settings.cpp` (per-game
+XML files without the attribute). Not merged: the measurement in ticket 06 is
+still to do.

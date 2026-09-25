@@ -165,7 +165,7 @@ Checked by a fact-check agent on 2026-09-25.
 
 ## Decisions so far
 
-(none yet)
+- [01](issues/01-research-plus-and-local-branches.md): the local chain 1838cd88..feb21710 applies to `master`. 9 small Plus commits apply alone. The big Plus memory and kernel work needs 8be36fa1 and cannot be taken alone. Recommended for ticket 02: option 1, single commits.
 
 ## Open questions
 
