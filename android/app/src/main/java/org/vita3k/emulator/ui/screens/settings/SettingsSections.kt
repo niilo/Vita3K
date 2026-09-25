@@ -1442,6 +1442,17 @@ private fun DebugSettingsSection(
         }
         if (!isPerApp) {
             SettingsToggleRow(
+                title = stringResource(R.string.settings_debug_perf_log),
+                checked = cfg.perfLog,
+                onCheckedChange = { onUpdate { perfLog = it } },
+                help = SettingsHelpEntry(
+                    title = stringResource(R.string.settings_debug_perf_log),
+                    body = stringResource(R.string.settings_debug_perf_log_desc),
+                    scope = SettingsScope.Global
+                ),
+                onShowHelp = onShowHelp
+            )
+            SettingsToggleRow(
                 title = stringResource(R.string.settings_debug_dump_elfs),
                 checked = cfg.dumpElfs,
                 onCheckedChange = { onUpdate { dumpElfs = it } },

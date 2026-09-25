@@ -597,6 +597,8 @@
     <string name="settings_debug_dump_elfs">ELF Dumping</string>
     <string name="settings_debug_dump_elfs_desc">Dump loaded code as ELFs.</string>
     <string name="settings_debug_validation_layer">Vulkan Validation Layer</string>
+    <string name="settings_debug_perf_log">Performance Log</string>
+    <string name="settings_debug_perf_log_desc">Write a time for each frame and each present to CSV files in the perf folder next to vita3k.log.\nUsed to measure frame rate and frame pacing. Starts when a game starts.</string>
     <string name="settings_debug_validation_layer_desc">Enable Vulkan validation layers.\nUseful for debugging but reduces performance.</string>
 
     <!-- Settings — Emulator tab -->
