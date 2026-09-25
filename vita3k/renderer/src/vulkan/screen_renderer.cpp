@@ -22,6 +22,7 @@
 #include "util/perf_log.h"
 #include "vkutil/vkutil.h"
 
+#include <algorithm>
 #include <cstdint>
 #include <exception>
 
@@ -206,29 +207,6 @@ bool ScreenRenderer::setup() {
         state.deep_stencil_use = vk::Format::eD16Unorm;
     }
 
-    // preferred order : mailbox > fifo_relaxed > fifo > whatever
-    // the only drawback for mailbox is that it draws more power, so maybe on a portable device use something else
-    // this one should always be available
-    present_mode = vk::PresentModeKHR::eImmediate;
-    const auto present_modes = state.physical_device.getSurfacePresentModesKHR(surface);
-    for (const auto &mode : present_modes) {
-        if (mode == vk::PresentModeKHR::eMailbox) {
-            present_mode = mode;
-            break;
-        }
-
-        if (mode == vk::PresentModeKHR::eFifoRelaxed) {
-            present_mode = mode;
-        }
-        if (present_mode == vk::PresentModeKHR::eFifoRelaxed)
-            continue;
-
-        if (mode == vk::PresentModeKHR::eFifo) {
-            present_mode = mode;
-        }
-    }
-    LOG_INFO("Present mode: {}", vk::to_string(present_mode));
-
     create_render_pass();
 
     create_swapchain();
@@ -242,8 +220,22 @@ bool ScreenRenderer::setup() {
     return true;
 }
 
+void ScreenRenderer::select_present_mode() {
+    const int requested_vsync = state.pending_vsync.exchange(-1, std::memory_order_relaxed);
+    if (requested_vsync >= 0)
+        vsync = requested_vsync != 0;
+
+    const auto present_modes = state.physical_device.getSurfacePresentModesKHR(surface);
+    const bool has_mailbox = std::find(present_modes.begin(), present_modes.end(), vk::PresentModeKHR::eMailbox) != present_modes.end();
+
+    // FIFO is the only mode that Vulkan requires, so it is the fallback.
+    present_mode = (!vsync && has_mailbox) ? vk::PresentModeKHR::eMailbox : vk::PresentModeKHR::eFifo;
+}
+
 void ScreenRenderer::create_swapchain() {
     surface_capabilities = state.physical_device.getSurfaceCapabilitiesKHR(surface);
+
+    select_present_mode();
 
     if (surface_capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
         extent = surface_capabilities.currentExtent;
@@ -256,7 +248,7 @@ void ScreenRenderer::create_swapchain() {
     if (extent.width == 0 || extent.height == 0)
         return;
 
-    swapchain_size = surface_capabilities.minImageCount + 1;
+    swapchain_size = surface_capabilities.minImageCount + extra_images;
     if (surface_capabilities.maxImageCount != 0)
         swapchain_size = std::min(swapchain_size, surface_capabilities.maxImageCount);
 
@@ -298,6 +290,14 @@ void ScreenRenderer::create_swapchain() {
     // Get Swapchain Images
     swapchain_images = state.device.getSwapchainImagesKHR(swapchain);
     swapchain_size = swapchain_images.size();
+    LOG_INFO("Present mode: {} (v-sync {}), swapchain images: {} (minimum {})", vk::to_string(present_mode), vsync ? "on" : "off", swapchain_size, surface_capabilities.minImageCount);
+
+    // vita_surface has one image per swapchain image. The count can change
+    // when the swapchain is created again with another present mode.
+    // The GPU is idle here: setup() runs before the first frame, and the
+    // rebuild waits for the device first.
+    if (!vita_surface.empty() && vita_surface.size() != swapchain_size)
+        vita_surface.resize(swapchain_size);
 
     // Get Image views
     swapchain_views.resize(swapchain_size);
@@ -700,8 +700,18 @@ bool ScreenRenderer::ensure_swapchain() {
     if (!window_has_drawable_size(state))
         return false;
 
-    if (!need_rebuild && !need_surface_recreate && swapchain && surface_matches_window_size())
+    const int requested_vsync = state.pending_vsync.load(std::memory_order_relaxed);
+    if (requested_vsync >= 0 && (requested_vsync != 0) != vsync)
+        need_rebuild = true;
+
+    if (!need_rebuild && !need_surface_recreate && swapchain && surface_matches_window_size()) {
+        // The request matches the current mode. Clear it, unless a new
+        // request came in after the load above.
+        int expected = requested_vsync;
+        if (requested_vsync >= 0)
+            state.pending_vsync.compare_exchange_strong(expected, -1, std::memory_order_relaxed);
         return true;
+    }
 
     if (!rebuild_swapchain_if_visible()) {
         need_rebuild = true;
