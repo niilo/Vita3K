@@ -44,3 +44,23 @@ Measure after: 06
   combination with the lowest 99th percentile as the v-sync-on default.
 
 ## Answer
+
+Code done on branch `pocket-s/11-present-mode-vsync`, commit abf7c1de.
+Linux and Android release builds pass.
+
+- `select_present_mode()` runs in `create_swapchain()`. v-sync on gives
+  FIFO. v-sync off gives MAILBOX, else FIFO.
+- `ensure_swapchain()` sets `need_rebuild` when `pending_vsync` differs
+  from the current mode.
+- `vita_surface` is resized in `create_swapchain()` when the image count
+  changes.
+- The log line is `Present mode: <mode> (v-sync on|off), swapchain images:
+  <n> (minimum <m>)`.
+- The temporary setting is `swapchain-extra-images` (default 1). 0 gives
+  `minImageCount`.
+- Note: v-sync is on by default, so the default mode changes from MAILBOX
+  to FIFO on all systems, desktop too. The spec says not to change other
+  devices without a measurement. Decide this before the merge.
+
+Still to do: the v-sync switch test and the A/B/A runs on the device after
+ticket 06.

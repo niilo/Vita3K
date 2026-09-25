@@ -43,3 +43,15 @@ Most games wait on this vblank, so its timing sets the frame pacing.
   more than the A spread.
 
 ## Answer
+
+Code done on branch `pocket-s/08-vblank-clock`, commit b238758c. Linux
+and Android release builds pass. `container/vita3k.sh test` passes.
+
+- Steps 1 to 3 are done. With `perf-log` on, `vblank.csv` has
+  `steady_us,wake_error_us` for each tick.
+- The temporary setting is `vblank-period-us` (default 16666). Set 16683
+  with `device.sh config-set org.vita3k.emulator vblank-period-us 16683`.
+- Step 4 (`AChoreographer`) is not done. Do it only if the A/B shows that
+  the clock change alone does not lower the frame interval 99th percentile.
+
+Still to do: the A/B/A runs on the device after ticket 06.
