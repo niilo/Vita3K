@@ -43,6 +43,7 @@
 #include <modules/module_parent.h>
 #include <string>
 #include <util/log.h>
+#include <util/perf_log.h>
 #include <util/string_utils.h>
 #include <util/vector_utils.h>
 #include <util/vita_theme_utils.h>
@@ -503,6 +504,12 @@ static ExitCode load_app_impl(SceUID &main_module_id, EmuEnvState &emuenv, const
     // get list of preload modules
     SceUInt32 process_preload_disabled = 0;
     auto process_param = emuenv.kernel.process_param.get(emuenv.mem);
+
+    // Each start of a game truncates the perf-log files.
+    if (emuenv.cfg.perf_log)
+        perf_log::start(emuenv.log_path / "perf");
+    else
+        perf_log::stop();
     if (process_param) {
         auto preload_disabled_ptr = Ptr<SceUInt32>(process_param->process_preload_disabled);
         if (preload_disabled_ptr) {

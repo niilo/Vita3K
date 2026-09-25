@@ -19,6 +19,7 @@
 
 #include "renderer/vulkan/state.h"
 #include "util/log.h"
+#include "util/perf_log.h"
 #include "vkutil/vkutil.h"
 
 #include <cstdint>
@@ -561,6 +562,8 @@ void ScreenRenderer::swap_window() {
     };
 
     auto result = state.general_queue.presentKHR(&present_info);
+    if (perf_log::enabled())
+        perf_log::write("presents", "steady_us,result", fmt::format("{},{}", perf_log::now_us(), static_cast<int>(result)));
     if (result == vk::Result::eSuboptimalKHR) {
         need_rebuild = !surface_matches_window_size();
     } else if (result == vk::Result::eErrorOutOfDateKHR || result == vk::Result::eErrorSurfaceLostKHR) {

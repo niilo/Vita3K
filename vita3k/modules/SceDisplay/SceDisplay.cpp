@@ -24,6 +24,7 @@
 #include <packages/functions.h>
 #include <renderer/state.h>
 #include <util/lock_and_find.h>
+#include <util/perf_log.h>
 #include <util/types.h>
 
 #include <util/tracy.h>
@@ -157,6 +158,8 @@ EXPORT(SceInt32, _sceDisplaySetFrameBuf, const SceDisplayFrameBuf *pFrameBuf, Sc
 
     emuenv.display.last_setframe_vblank_count = emuenv.display.vblank_count.load();
     emuenv.frame_count++;
+    if (perf_log::enabled())
+        perf_log::write("frames", "steady_us,title_id", fmt::format("{},{}", perf_log::now_us(), emuenv.io.title_id));
 
 #ifdef TRACY_ENABLE
     FrameMarkNamed("SCE frame buffer"); // Tracy - Secondary frame end mark for the emulated frame buffer

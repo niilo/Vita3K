@@ -91,6 +91,7 @@ class EmulatorConfig {
     @JvmField var checkForUpdatesMode: Int = 1
     @JvmField var archiveLog: Boolean = false
     @JvmField var logCompatWarn: Boolean = false
+    @JvmField var perfLog: Boolean = false
     @JvmField var logLevel: Int = 0
     @JvmField var performanceOverlay: Boolean = false
     @JvmField var performanceOverlayDetail: Int = 0
@@ -166,6 +167,7 @@ class EmulatorConfig {
         config.checkForUpdatesMode = checkForUpdatesMode
         config.archiveLog = archiveLog
         config.logCompatWarn = logCompatWarn
+        config.perfLog = perfLog
         config.logLevel = logLevel
         config.performanceOverlay = performanceOverlay
         config.performanceOverlayDetail = performanceOverlayDetail
@@ -245,6 +247,7 @@ class EmulatorConfig {
             checkForUpdatesMode == other.checkForUpdatesMode &&
             archiveLog == other.archiveLog &&
             logCompatWarn == other.logCompatWarn &&
+            perfLog == other.perfLog &&
             logLevel == other.logLevel &&
             performanceOverlay == other.performanceOverlay &&
             performanceOverlayDetail == other.performanceOverlayDetail &&
@@ -321,6 +324,7 @@ class EmulatorConfig {
         result = 31 * result + checkForUpdatesMode
         result = 31 * result + archiveLog.hashCode()
         result = 31 * result + logCompatWarn.hashCode()
+        result = 31 * result + perfLog.hashCode()
         result = 31 * result + logLevel
         result = 31 * result + performanceOverlay.hashCode()
         result = 31 * result + performanceOverlayDetail

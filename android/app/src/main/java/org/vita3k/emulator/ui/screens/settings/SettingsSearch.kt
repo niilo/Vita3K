@@ -128,6 +128,7 @@ internal fun rememberSettingsSearchEntries(
         add(entry(SettingsCategory.Debug, R.string.settings_debug_color_surface, R.string.settings_debug_color_surface_desc))
         add(entry(SettingsCategory.Debug, R.string.settings_debug_validation_layer, R.string.settings_debug_validation_layer_desc))
         if (!isPerApp) {
+            add(entry(SettingsCategory.Debug, R.string.settings_debug_perf_log, R.string.settings_debug_perf_log_desc, scope = SettingsScope.Global, keywords = "fps frame time csv benchmark"))
             add(entry(SettingsCategory.Debug, R.string.settings_debug_dump_elfs, R.string.settings_debug_dump_elfs_desc, scope = SettingsScope.Global, keywords = "elf dump loaded code"))
         }
         add(entry(SettingsCategory.Emulator, R.string.settings_emulator_texture_cache, R.string.settings_emulator_texture_cache_desc))
