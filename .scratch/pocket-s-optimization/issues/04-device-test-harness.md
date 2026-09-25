@@ -54,3 +54,15 @@ more than one device is connected and no serial is given.
 - `CLAUDE.md` names the script in one line.
 
 ## Answer
+
+Code done and merged to `master`: dfec4350 (merge 723db855).
+`bash -n` passes. Each command was tested with a fake `adb` on the Mac:
+`lock`, `release` (it keeps a lock of another session), `config-set` (it
+fails on a missing key), `thermal` (it writes the header and one line per
+second, and warns once about values it cannot read).
+
+Extra command: `lock <ticket>` writes `tmp/device.lock` with the ticket and
+the session name (`VITA3K_DEVICE_SESSION`, default `<user>@<host>`).
+
+Still to do on the device (no device was connected on 2026-09-25):
+`info` output, the device checks, and whether `keys` reaches a game.

@@ -1,6 +1,7 @@
 # 08: Make the emulated vblank clock steady
 
-Status: open
+Status: claimed
+Claimed: 2026-09-25 Claude Code session (Opus 5.5)
 Type: task
 Label: ready-for-agent
 Blocked by: 05

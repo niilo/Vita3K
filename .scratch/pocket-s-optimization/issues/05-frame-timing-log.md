@@ -52,3 +52,18 @@ hide stutter, so the log must have one line per frame.
   lines in `frames.csv`, and the summary prints all values.
 
 ## Answer
+
+Code done and merged to `master`: d392779e (merge bd247362). Linux
+and Android release builds pass. `python3 tools/android/test_perf_summary.py`
+passes (3 tests).
+
+- The files are in `perf/` next to `vita3k.log`:
+  `/sdcard/Android/data/<package>/files/perf/`. `device.sh pull-perf`
+  pulls that folder.
+- `perf_log::start()` runs at the start of `run_app()`, so each game start
+  truncates the files.
+- Other tickets add channels with `perf_log::write("<name>", "<header>",
+  line)`. Each channel is `<name>.csv`.
+
+Still to do on the device (ticket 06): check that a 60 second run gives
+about `60 x fps` lines in `frames.csv`.
