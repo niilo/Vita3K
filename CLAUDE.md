@@ -63,6 +63,9 @@ container/vita3k.sh run <cmd...>     # any command in the Linux container
   (`container/vita3k.sh clean-cache` deletes them).
 - `VITA3K_CONTAINER_CPUS` and `VITA3K_CONTAINER_MEMORY` (default 16G) set the
   container size. The container default of 1 GiB is too small to link.
+- `tools/android/device.sh` runs the test loop on an Android device through
+  adb: install, launch, config changes, logs, thermal data. Run it with
+  `help` for the commands.
 - A container build cannot run the emulator with a GPU. Use a native macOS
   build (below) to run games.
 
